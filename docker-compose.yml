@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      # Nuxt sobreescribe el runtimeConfig con las variables NUXT_* al arrancar
+      NUXT_PANDOC_IMAGE: ${PANDOC_IMAGE:-fpvirtualaragon/pandoc:latest}
+      NUXT_MAX_UPLOAD_MB: ${NUXT_MAX_UPLOAD_MB:-50}
+      # El workspace debe usar la MISMA ruta absoluta en el contenedor y en el
+      # host, porque el contenedor efímero de pandoc monta esa ruta vía socket
+      # y el daemon la resuelve en el host.
+      NUXT_WORKSPACE_ROOT: ${WORKSPACE_DIR:-${PWD}/data}/uploads
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${WORKSPACE_DIR:-${PWD}/data}:${WORKSPACE_DIR:-${PWD}/data}
+    restart: unless-stopped
