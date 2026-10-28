@@ -1,7 +1,21 @@
 ---
 title: "Ejemplo de enlaces e imágenes"
+subtitle: "Plantilla corporativa FPVirtual"
 author: "FPVirtual"
+date: "28 de octubre de 2026"
 lang: es
+mainfont: Carlito
+sansfont: Carlito
+keywords: [markdown, imágenes, fpvirtual]
+colorlinks: true
+titlepage: true
+titlepage-logo: "logo-cdfp.png"
+page-background: "portada-fondo.png"
+page-background-opacity: "1"
+header-left: ""
+header-right: ""
+footer-left: "FPVirtual"
+footer-right: '\thepage'
 ---
 
 # Enlaces
@@ -15,7 +29,8 @@ Puedes añadir enlaces de dos formas:
 [pandoc]: https://pandoc.org
 [eisvogel]: https://github.com/Wandmalfarbe/pandoc-latex-template
 
-Los enlaces se muestran en color y son pulsables en el PDF resultante.
+Los enlaces se muestran en naranja corporativo y son pulsables en el PDF
+resultante.
 
 # Imágenes
 
@@ -25,8 +40,8 @@ pandoc las incorporará al PDF.
 
 ![Ejemplo de imagen incluida en el documento](captura-ejemplo.png)
 
-También puedes usar imágenes dentro de un párrafo:
-![icono](captura-ejemplo.png){width=1.5cm}.
+Las imágenes más anchas que la página se escalan automáticamente para
+ajustarse al ancho del texto.
 
 Formatos admitidos: **PNG, JPG, GIF, WebP, SVG y BMP**.
 
@@ -34,5 +49,6 @@ Formatos admitidos: **PNG, JPG, GIF, WebP, SVG y BMP**.
 
 - Usa nombres de archivo sin espacios ni tildes (`captura-ejemplo.png` en
   lugar de `mi captura (1).png`).
-- Mantén las imágenes en la misma carpeta que el `.md` o en subcarpetas
-  referenciadas con rutas relativas (`img/diagrama.png`).
+- Si el documento va a tener portada corporativa, sube también
+  `logo-cdfp.png` y `portada-fondo.png` (descargables desde la página de
+  ayuda) junto con el `.md`.

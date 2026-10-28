@@ -6,8 +6,9 @@
         <CardDescription>
           Guía de la sintaxis Markdown soportada por la aplicación. La
           conversión se realiza con
-          <strong>pandoc</strong> y la plantilla
-          <strong>Eisvogel</strong>, por lo que se admite toda la sintaxis de
+          <strong>pandoc</strong> y la plantilla corporativa
+          <strong>FPVirtual</strong> (un fork de Eisvogel), por lo que se
+          admite toda la sintaxis de
           <em>pandoc Markdown</em>. Cada sección incluye el código fuente, el
           PDF de resultado y los ficheros de ejemplo descargables.
         </CardDescription>
@@ -160,12 +161,28 @@
       </CardHeader>
       <CardContent class="flex flex-col gap-4">
         <p class="text-sm leading-relaxed">
-          El bloque YAML al inicio del documento controla la portada, el
-          resumen, el índice y otros aspectos del PDF. Copia esta plantilla y
-          adapta los valores:
+          El bloque YAML al inicio del documento controla la portada
+          corporativa FPVirtual, el resumen, el índice y las cabeceras.
+          Copia esta plantilla y adapta los valores. La portada corporativa
+          (línea naranja, logo, título en mayúsculas) ignora las opciones
+          clásicas de Eisvogel como <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">titlepage-color</code>.
         </p>
         <CodeBlock :code="portadaYaml" />
         <ResultPreview file="portada" />
+        <Alert>
+          <CircleAlert class="h-4 w-4" />
+          <AlertTitle>Recursos de la portada</AlertTitle>
+          <AlertDescription>
+            Para que la portada compile, sube el <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">.md</code>
+            junto con
+            <a href="/ejemplos/logo-cdfp.png" download class="text-primary hover:underline">logo-cdfp.png</a>
+            y
+            <a href="/ejemplos/portada-fondo.png" download class="text-primary hover:underline">portada-fondo.png</a>
+            (las rutas del YAML son relativas al documento). Por defecto, la
+            plantilla añade una línea de licencia Creative Commons bajo el
+            resumen; puedes cambiarla con el campo <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">license</code>.
+          </AlertDescription>
+        </Alert>
         <div>
           <h3 class="mb-2 text-sm font-semibold">Campos disponibles</h3>
           <div class="overflow-x-auto rounded-lg border">
@@ -266,14 +283,21 @@ date: "28 de octubre de 2026"
 abstract: |
   Resumen del documento que aparece tras
   la portada.
-keywords: [markdown, pandoc, eisvogel]
+keywords: [markdown, pandoc, fpvirtual]
 lang: es
-# Portada (opciones Eisvogel)
+mainfont: Carlito   # tipografía corporativa
+sansfont: Carlito
+colorlinks: true
+# Portada corporativa FPVirtual
 titlepage: true
-titlepage-color: "00539F"
-titlepage-text-color: "FFFFFF"
-titlepage-rule-color: "FFFFFF"
-titlepage-rule-height: 2
+titlepage-logo: "logo-cdfp.png"
+page-background: "portada-fondo.png"
+page-background-opacity: "1"
+# Cabeceras y pies de página
+header-left: ""
+header-right: ""
+footer-left: "FPVirtual"
+footer-right: '\\thepage'
 # Índice
 toc: true
 toc-title: "Índice de contenidos"
@@ -282,25 +306,26 @@ numbersections: true
 ---`
 
 const yamlFields: { name: string, description: string }[] = [
-  { name: 'title', description: 'Título del documento (obligatorio para la portada).' },
-  { name: 'subtitle', description: 'Subtítulo que aparece bajo el título.' },
+  { name: 'title', description: 'Título del documento; en la portada aparece en mayúsculas.' },
+  { name: 'subtitle', description: 'Subtítulo en naranja bajo el título de la portada.' },
   { name: 'author', description: 'Autor o lista de autores: [Autor 1, Autor 2].' },
   { name: 'date', description: 'Fecha que se muestra en la portada.' },
   { name: 'abstract', description: 'Resumen que aparece tras la portada (usa | para varias líneas).' },
-  { name: 'keywords', description: 'Palabras clave: [una, dos, tres].' },
-  { name: 'lang', description: 'Idioma del documento (es, en, fr…). Afecta a separación silábica y tipografía.' },
-  { name: 'titlepage', description: 'Genera portada con la plantilla Eisvogel (true/false).' },
-  { name: 'titlepage-color', description: 'Color de fondo de la portada, en hexadecimal sin #: "00539F".' },
-  { name: 'titlepage-text-color', description: 'Color del texto de la portada: "FFFFFF".' },
-  { name: 'titlepage-rule-color', description: 'Color de la línea decorativa bajo el título.' },
-  { name: 'titlepage-rule-height', description: 'Grosor de esa línea, en puntos.' },
+  { name: 'keywords', description: 'Palabras clave del documento: [una, dos, tres].' },
+  { name: 'lang', description: 'Idioma (es, en…). Afecta a la separación silábica y la tipografía.' },
+  { name: 'mainfont / sansfont', description: 'Tipografía corporativa: Carlito (requiere xelatex).' },
+  { name: 'colorlinks', description: 'Muestra los enlaces en naranja corporativo en lugar de recuadros.' },
+  { name: 'titlepage', description: 'Genera la portada corporativa FPVirtual (true/false).' },
+  { name: 'titlepage-logo', description: 'Ruta del logo de la portada, relativa al .md (p. ej. logo-cdfp.png).' },
+  { name: 'logo-width', description: 'Anchura del logo (p. ej. 40mm); por defecto 35mm.' },
+  { name: 'page-background', description: 'Imagen de fondo de las páginas interiores (línea corporativa), p. ej. portada-fondo.png.' },
+  { name: 'page-background-opacity', description: 'Opacidad del fondo; usa "1" para el fondo corporativo.' },
   { name: 'toc', description: 'Incluye el índice de contenidos (true/false).' },
   { name: 'toc-title', description: 'Título del índice («Índice», «Contenidos»…).' },
   { name: 'toc-depth', description: 'Nivel máximo de encabezado incluido en el índice (1–5).' },
   { name: 'numbersections', description: 'Numera automáticamente las secciones (true/false).' },
-  { name: 'fontsize', description: 'Tamaño base de fuente: 10pt, 11pt o 12pt.' },
-  { name: 'colorlinks', description: 'Muestra los enlaces en color en lugar de recuadros.' },
-  { name: 'linkcolor / urlcolor / toccolor', description: 'Colores de enlaces internos, externos y del índice.' },
-  { name: 'page-break', description: 'Fuerza salto de página antes de cada encabezado de nivel 1 (true/false).' }
+  { name: 'header-left / header-center / header-right', description: 'Texto de la cabecera; cadena vacía para ocultarlo.' },
+  { name: 'footer-left / footer-center / footer-right', description: 'Texto del pie de página; \\thepage muestra el número de página.' },
+  { name: 'license', description: 'Texto de licencia bajo el resumen; por defecto CC BY 3.0.' }
 ]
 </script>

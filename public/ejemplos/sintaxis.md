@@ -1,7 +1,21 @@
 ---
 title: "Ejemplo de sintaxis Markdown"
+subtitle: "Plantilla corporativa FPVirtual"
 author: "FPVirtual"
+date: "28 de octubre de 2026"
 lang: es
+mainfont: Carlito
+sansfont: Carlito
+keywords: [markdown, pandoc, fpvirtual]
+colorlinks: true
+titlepage: true
+titlepage-logo: "logo-cdfp.png"
+page-background: "portada-fondo.png"
+page-background-opacity: "1"
+header-left: ""
+header-right: ""
+footer-left: "FPVirtual"
+footer-right: '\thepage'
 ---
 
 # Encabezado de nivel 1
@@ -77,7 +91,7 @@ console.log(doble(21));
 
 ## Notas al pie
 
-La plantilla Eisvogel genera los PDF con pandoc.[^pandoc] Las notas al pie
+La plantilla FPVirtual genera los PDF con pandoc.[^pandoc] Las notas al pie
 ayudan a incluir referencias sin interrumpir la lectura.[^nota]
 
 [^pandoc]: Pandoc es un conversor universal de documentos: <https://pandoc.org>.

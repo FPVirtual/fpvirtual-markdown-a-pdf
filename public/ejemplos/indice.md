@@ -1,7 +1,20 @@
 ---
 title: "Ejemplo de índice"
+subtitle: "Plantilla corporativa FPVirtual"
 author: "FPVirtual"
+date: "28 de octubre de 2026"
 lang: es
+mainfont: Carlito
+sansfont: Carlito
+colorlinks: true
+titlepage: true
+titlepage-logo: "logo-cdfp.png"
+page-background: "portada-fondo.png"
+page-background-opacity: "1"
+header-left: ""
+header-right: ""
+footer-left: "FPVirtual"
+footer-right: '\thepage'
 toc: true
 toc-title: "Índice"
 toc-depth: 3
