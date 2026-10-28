@@ -13,13 +13,16 @@ cp "$DIR/fpvirtual-theme/fpvirtual/logo-cdfp.png" \
    "$DIR/fpvirtual-theme/fpvirtual/portada-fondo.png" \
    "$DIR/public/ejemplos/fpvirtual/"
 
-for f in sintaxis enlaces-imagenes portada indice; do
+for f in sintaxis enlaces-imagenes portada indice cajas; do
   docker run --rm --network none --user "$(id -u):$(id -g)" \
     --mount "type=bind,src=$DIR/public/ejemplos,dst=/data" \
     --mount "type=bind,src=$DIR/fpvirtual-theme,dst=/theme" \
     --env TEXINPUTS=/theme: \
     "$IMAGE" "/data/$f.md" -o "/data/$f.pdf" \
     --from markdown --template=/theme/fpvirtual.latex --pdf-engine=xelatex \
-    --resource-path=/data --syntax-highlighting=default
+    --resource-path=/data --syntax-highlighting=default \
+    --filter pandoc-latex-environment \
+    --metadata-file=/theme/content-boxes.yaml \
+    -H /theme/content-boxes.tex
   echo "Generado public/ejemplos/$f.pdf"
 done

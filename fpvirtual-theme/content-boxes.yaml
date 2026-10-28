@@ -1,0 +1,7 @@
+# Mapeo clase → entorno LaTeX para el filtro pandoc-latex-environment.
+# Se pasa a pandoc con --metadata-file; si el documento define su propio
+# `pandoc-latex-environment`, ese tiene prioridad sobre este.
+pandoc-latex-environment:
+  nota: [nota]
+  aviso: [aviso]
+  importante: [importante]

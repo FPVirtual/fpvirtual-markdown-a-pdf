@@ -72,6 +72,19 @@ export async function convertToPdf(workspace: Workspace): Promise<void> {
     '--syntax-highlighting=default'
   )
 
+  // Cajas de contenido (nota/aviso/importante): el filtro
+  // pandoc-latex-environment convierte divs con clase en entornos LaTeX y
+  // content-boxes.tex define esos entornos con tcolorbox. Solo con la
+  // plantilla corporativa montada; la imagen debe incluir el filtro (la de
+  // fpvirtual-pandoc-theme lo hace, al basarse en pandoc/extra).
+  if (themeDir) {
+    args.push(
+      '--filter', 'pandoc-latex-environment',
+      '--metadata-file=/theme/content-boxes.yaml',
+      '-H', '/theme/content-boxes.tex'
+    )
+  }
+
   await new Promise<void>((resolvePromise, rejectPromise) => {
     const child = execFile('docker', args, {
       timeout: PANDOC_TIMEOUT_MS,

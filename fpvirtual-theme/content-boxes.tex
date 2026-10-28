@@ -1,0 +1,58 @@
+% Cajas de contenido corporativas (nota, aviso, importante) y estilo del
+% resumen. Se inyecta en la cabecera del documento con `pandoc -H` y se
+% activan con el filtro pandoc-latex-environment a partir de divs con clase
+% (::: nota, ::: aviso, ::: importante). Mismos colores que
+% fpvirtual/customization.latex. Las definiciones se protegen con guards para
+% no chocar con entornos definidos por el propio documento.
+\usepackage[most]{tcolorbox}
+
+\definecolor{fpvbox-orange}{HTML}{F3970D}
+\definecolor{fpvbox-darkorange}{HTML}{C77800}
+\definecolor{fpvbox-red}{HTML}{A50000}
+\definecolor{fpvbox-midgray}{HTML}{808080}
+
+% resumen — caja del abstract (YAML), naranja corporativo
+\tcolorboxenvironment{abstract}{
+  enhanced, breakable,
+  colback=fpvbox-orange!6!white, colframe=fpvbox-orange,
+  boxrule=0.5pt, arc=1.2mm,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=Resumen, colbacktitle=fpvbox-orange, coltitle=white,
+  fonttitle=\sffamily\bfseries\small, titlerule=0mm,
+}
+
+% nota — información complementaria
+\ifcsname nota\endcsname\else
+\newtcolorbox{nota}{
+  enhanced, breakable,
+  colback=fpvbox-midgray!7!white, colframe=fpvbox-midgray!40!white,
+  boxrule=0.5pt, arc=1.2mm,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=Nota, colbacktitle=fpvbox-midgray!40!white, coltitle=white,
+  fonttitle=\sffamily\bfseries\small, titlerule=0mm,
+}
+\fi
+
+% aviso — precaución
+\ifcsname aviso\endcsname\else
+\newtcolorbox{aviso}{
+  enhanced, breakable,
+  colback=fpvbox-darkorange!7!white, colframe=fpvbox-darkorange,
+  boxrule=0.5pt, arc=1.2mm,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=Aviso, colbacktitle=fpvbox-darkorange, coltitle=white,
+  fonttitle=\sffamily\bfseries\small, titlerule=0mm,
+}
+\fi
+
+% importante — advertencia grave / irreversible
+\ifcsname importante\endcsname\else
+\newtcolorbox{importante}{
+  enhanced, breakable,
+  colback=fpvbox-red!5!white, colframe=fpvbox-red,
+  boxrule=0.5pt, arc=1.2mm,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title=Importante, colbacktitle=fpvbox-red, coltitle=white,
+  fonttitle=\sffamily\bfseries\small, titlerule=0mm,
+}
+\fi

@@ -16,6 +16,13 @@
             Inicio
           </NuxtLink>
           <NuxtLink
+            to="/editor"
+            class="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+            active-class="bg-accent font-medium text-foreground"
+          >
+            Editor
+          </NuxtLink>
+          <NuxtLink
             to="/ayuda"
             class="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
             active-class="bg-accent font-medium text-foreground"
@@ -25,7 +32,10 @@
         </nav>
       </div>
     </header>
-    <main class="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
+    <main
+      class="mx-auto w-full flex-1 px-4 py-8"
+      :class="route.meta.fullWidth ? 'max-w-7xl' : 'max-w-3xl'"
+    >
       <NuxtPage />
     </main>
     <footer class="border-t bg-background py-4 text-center text-sm text-muted-foreground">
@@ -36,4 +46,6 @@
 
 <script setup lang="ts">
 import { FileText } from 'lucide-vue-next'
+
+const route = useRoute()
 </script>
