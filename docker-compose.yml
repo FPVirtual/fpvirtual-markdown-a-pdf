@@ -12,7 +12,12 @@ services:
       # host, porque el contenedor efímero de pandoc monta esa ruta vía socket
       # y el daemon la resuelve en el host.
       NUXT_WORKSPACE_ROOT: ${WORKSPACE_DIR:-${PWD}/data}/uploads
+      # La plantilla se monta en la MISMA ruta absoluta en host y contenedor,
+      # igual que el workspace: el contenedor efímero de pandoc la monta vía
+      # socket y el daemon la resuelve en el host.
+      NUXT_THEME_DIR: ${THEME_DIR:-${PWD}/fpvirtual-theme}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${WORKSPACE_DIR:-${PWD}/data}:${WORKSPACE_DIR:-${PWD}/data}
+      - ${THEME_DIR:-${PWD}/fpvirtual-theme}:${THEME_DIR:-${PWD}/fpvirtual-theme}:ro
     restart: unless-stopped

@@ -11,8 +11,10 @@ const YAML_BLOCK_RE = /^---\r?\n[\s\S]*?\r?\n---\r?\n/
 // Plantilla corporativa FPVirtual (fork de Eisvogel) que se monta en el
 // contenedor efímero junto con el logo y el fondo de portada, para no
 // depender de que la imagen pandoc la incluya.
-function resolveThemeDir(): string | null {
-  const dir = resolvePath(process.cwd(), 'fpvirtual-theme')
+function resolveThemeDir(themeDirFromConfig: string): string | null {
+  const dir = themeDirFromConfig
+    ? resolvePath(themeDirFromConfig)
+    : resolvePath(process.cwd(), 'fpvirtual-theme')
   return existsSync(join(dir, 'fpvirtual.latex')) ? dir : null
 }
 
@@ -41,7 +43,7 @@ export async function convertToPdf(workspace: Workspace): Promise<void> {
   const config = useRuntimeConfig()
   const image = config.pandocImage
   const inputName = basename(workspace.documentPath)
-  const themeDir = resolveThemeDir()
+  const themeDir = resolveThemeDir(config.themeDir)
 
   const args = [
     'run', '--rm',

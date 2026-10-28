@@ -58,15 +58,18 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
 | `PANDOC_IMAGE`     | `fpvirtual-pandoc:latest` | Imagen pandoc con la plantilla FPVirtual  |
 | `PORT`             | `3000`                       | Puerto publicado en el host                  |
 | `NUXT_MAX_UPLOAD_MB` | `50`                       | Tamaño máximo total de subida (MB)           |
+| `WORKSPACE_DIR`    | `<proyecto>/data`            | Workspace de conversiones (misma ruta en host y contenedor) |
+| `THEME_DIR`        | `<proyecto>/fpvirtual-theme` | Plantilla FPVirtual (misma ruta en host y contenedor) |
 
 ## Notas
 
 - El servicio `app` monta `/var/run/docker.sock` para lanzar los contenedores
-  efímeros de pandoc. El workspace usa la **misma ruta absoluta dentro del
-  contenedor y en el host** (por defecto `<proyecto>/data`, configurable con
-  `WORKSPACE_DIR`), porque el `docker run -v` se resuelve en el host. Funciona
-  en Linux con Docker local; con Docker Desktop o un daemon remoto habría que
-  revisar la estrategia de rutas.
+  efímeros de pandoc. El workspace y la plantilla FPVirtual usan la **misma
+  ruta absoluta dentro del contenedor y en el host** (por defecto
+  `<proyecto>/data` y `<proyecto>/fpvirtual-theme`, configurables con
+  `WORKSPACE_DIR` y `THEME_DIR`), porque el `docker run -v` se resuelve en el
+  host. Funciona en Linux con Docker local; con Docker Desktop o un daemon
+  remoto habría que revisar la estrategia de rutas.
 - La imagen debe exponer pandoc como entrypoint con trabajo en `/data` y las
   fuentes Carlito. Lo recomendado es la imagen del proyecto
   [`fpvirtual-pandoc-theme`](https://github.com/FPVirtual/fpvirtual-pandoc-theme)
