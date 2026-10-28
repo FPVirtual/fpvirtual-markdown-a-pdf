@@ -76,7 +76,9 @@ async function convert() {
   try {
     const formData = new FormData()
     for (const file of files.value) {
-      formData.append('files', file)
+      // webkitRelativePath conserva la carpeta (p. ej. images/foo.png) cuando
+      // se arrastra una carpeta completa; sin ella solo viaja el nombre.
+      formData.append('files', file, file.webkitRelativePath || file.name)
     }
 
     const response = await $fetch<ConvertResult>('/api/convert', {

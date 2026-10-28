@@ -49,7 +49,7 @@ export async function convertToPdf(workspace: Workspace): Promise<void> {
     '--template=eisvogel',
     '--pdf-engine=xelatex',
     '--resource-path=/data',
-    '--syntax-highlighting=idiomatic'
+    '--syntax-highlighting=default'
   )
 
   await new Promise<void>((resolvePromise, rejectPromise) => {

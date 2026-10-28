@@ -12,7 +12,7 @@
     <div class="text-sm">
       <p class="font-medium">Arrastra aquí tus archivos</p>
       <p class="text-muted-foreground">
-        El documento Markdown y las imágenes que referencia
+        El documento Markdown y las imágenes que referencia (o la carpeta que los contiene)
       </p>
     </div>
     <Button variant="outline" size="sm" @click="fileInput?.click()">

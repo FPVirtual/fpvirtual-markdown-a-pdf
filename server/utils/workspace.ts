@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto'
 import { mkdir, rm, writeFile } from 'node:fs/promises'
-import { basename } from 'node:path'
+import { dirname } from 'node:path'
 import { resolve as resolvePath } from 'node:path'
 
 export interface Workspace {
@@ -16,8 +16,12 @@ export function resolveWorkspaceRoot(): string {
 }
 
 export function sanitizeFilename(name: string): string {
-  const safe = basename(name).replace(/[^\w.\-() áéíóúÁÉÍÓÚñÑ]/g, '_')
-  return safe || 'archivo'
+  // Conserva subdirectorios relativos (p. ej. images/captura.png) para que las
+  // rutas de las imágenes referenciadas en el Markdown sigan resolviéndose.
+  // Los segmentos ".." se descartan para evitar salir del workspace.
+  const segments = name.split(/[\\/]+/).filter(s => s && s !== '.' && s !== '..')
+  const safe = segments.map(s => s.replace(/[^\w.\-() áéíóúÁÉÍÓÚñÑ]/g, '_'))
+  return safe.join('/') || 'archivo'
 }
 
 export async function createWorkspace(documentName: string): Promise<Workspace> {
@@ -35,6 +39,7 @@ export async function createWorkspace(documentName: string): Promise<Workspace> 
 
 export async function saveFile(workspace: Workspace, name: string, data: Buffer): Promise<string> {
   const path = resolvePath(workspace.dir, sanitizeFilename(name))
+  await mkdir(dirname(path), { recursive: true })
   await writeFile(path, data)
   return path
 }
