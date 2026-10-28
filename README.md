@@ -10,7 +10,7 @@ corporativa FPVirtual, generado mediante la imagen pandoc del proyecto
 - Docker con el plugin Compose.
 - La imagen pandoc FPVirtual disponible en el daemon de Docker. **Se construye
   en el proyecto `fpvirtual-pandoc-theme`**, no en este repositorio. Por
-  defecto este proyecto espera el nombre `fpvirtualaragon/pandoc:latest`
+  defecto este proyecto espera el nombre `fpvirtual-pandoc:latest`
   (configurable con la variable `PANDOC_IMAGE`).
 
 ## Puesta en marcha
@@ -55,7 +55,7 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
 
 | Variable           | Por defecto                  | Descripción                                  |
 | ------------------ | ---------------------------- | -------------------------------------------- |
-| `PANDOC_IMAGE`     | `fpvirtualaragon/pandoc:latest` | Imagen pandoc con la plantilla FPVirtual  |
+| `PANDOC_IMAGE`     | `fpvirtual-pandoc:latest` | Imagen pandoc con la plantilla FPVirtual  |
 | `PORT`             | `3000`                       | Puerto publicado en el host                  |
 | `NUXT_MAX_UPLOAD_MB` | `50`                       | Tamaño máximo total de subida (MB)           |
 
@@ -70,7 +70,7 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
 - La imagen debe exponer pandoc como entrypoint con trabajo en `/data` y las
   fuentes Carlito. Lo recomendado es la imagen del proyecto
   [`fpvirtual-pandoc-theme`](https://github.com/FPVirtual/fpvirtual-pandoc-theme)
-  (`docker build -t fpvirtualaragon/pandoc:latest .`), que además incluye la
+  (`docker build -t fpvirtual-pandoc:latest .`), que además incluye la
   plantilla `fpvirtual` y los recursos corporativos para uso standalone; la
   app, en cualquier caso, monta su propia copia de la plantilla desde
   `fpvirtual-theme/`.

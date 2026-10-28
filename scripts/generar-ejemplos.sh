@@ -5,7 +5,7 @@
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE="${PANDOC_IMAGE:-fpvirtualaragon/pandoc:latest}"
+IMAGE="${PANDOC_IMAGE:-fpvirtual-pandoc:latest}"
 
 # Recursos corporativos descargables junto a los ejemplos.
 mkdir -p "$DIR/public/ejemplos/fpvirtual"
