@@ -173,14 +173,16 @@
           <CircleAlert class="h-4 w-4" />
           <AlertTitle>Recursos de la portada</AlertTitle>
           <AlertDescription>
-            Para que la portada compile, sube el <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">.md</code>
-            junto con
-            <a href="/ejemplos/logo-cdfp.png" download class="text-primary hover:underline">logo-cdfp.png</a>
+            La aplicación incluye automáticamente el logo y el fondo
+            corporativos, por lo que la portada funciona sin subir ningún
+            archivo extra. Si generas el PDF fuera de la aplicación, puedes
+            descargarlos aquí:
+            <a href="/ejemplos/fpvirtual/logo-cdfp.png" download class="text-primary hover:underline">logo-cdfp.png</a>
             y
-            <a href="/ejemplos/portada-fondo.png" download class="text-primary hover:underline">portada-fondo.png</a>
-            (las rutas del YAML son relativas al documento). Por defecto, la
-            plantilla añade una línea de licencia Creative Commons bajo el
-            resumen; puedes cambiarla con el campo <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">license</code>.
+            <a href="/ejemplos/fpvirtual/portada-fondo.png" download class="text-primary hover:underline">portada-fondo.png</a>.
+            Por defecto, la plantilla añade una línea de licencia Creative
+            Commons bajo el resumen; puedes cambiarla con el campo
+            <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">license</code>.
           </AlertDescription>
         </Alert>
         <div>
@@ -290,8 +292,8 @@ sansfont: Carlito
 colorlinks: true
 # Portada corporativa FPVirtual
 titlepage: true
-titlepage-logo: "logo-cdfp.png"
-page-background: "portada-fondo.png"
+titlepage-logo: "fpvirtual/logo-cdfp.png"
+page-background: "fpvirtual/portada-fondo.png"
 page-background-opacity: "1"
 # Cabeceras y pies de página
 header-left: ""
@@ -316,9 +318,9 @@ const yamlFields: { name: string, description: string }[] = [
   { name: 'mainfont / sansfont', description: 'Tipografía corporativa: Carlito (requiere xelatex).' },
   { name: 'colorlinks', description: 'Muestra los enlaces en naranja corporativo en lugar de recuadros.' },
   { name: 'titlepage', description: 'Genera la portada corporativa FPVirtual (true/false).' },
-  { name: 'titlepage-logo', description: 'Ruta del logo de la portada, relativa al .md (p. ej. logo-cdfp.png).' },
+  { name: 'titlepage-logo', description: 'Ruta del logo de la portada (por defecto fpvirtual/logo-cdfp.png, incluido en la aplicación).' },
   { name: 'logo-width', description: 'Anchura del logo (p. ej. 40mm); por defecto 35mm.' },
-  { name: 'page-background', description: 'Imagen de fondo de las páginas interiores (línea corporativa), p. ej. portada-fondo.png.' },
+  { name: 'page-background', description: 'Imagen de fondo de las páginas interiores (línea corporativa); por defecto fpvirtual/portada-fondo.png.' },
   { name: 'page-background-opacity', description: 'Opacidad del fondo; usa "1" para el fondo corporativo.' },
   { name: 'toc', description: 'Incluye el índice de contenidos (true/false).' },
   { name: 'toc-title', description: 'Título del índice («Índice», «Contenidos»…).' },

@@ -15,8 +15,8 @@ sansfont: Carlito
 colorlinks: true
 # Portada corporativa FPVirtual
 titlepage: true
-titlepage-logo: "logo-cdfp.png"
-page-background: "portada-fondo.png"
+titlepage-logo: "fpvirtual/logo-cdfp.png"
+page-background: "fpvirtual/portada-fondo.png"
 page-background-opacity: "1"
 # Cabeceras y pies de página
 header-left: ""
@@ -37,8 +37,9 @@ Este ejemplo muestra una cabecera YAML completa para generar la portada
 corporativa, el índice y las cabeceras. Solo tienes que copiar el bloque
 `---` del fichero de ejemplo y adaptar los valores.
 
-Recuerda subir junto al `.md` los recursos de la portada:
-`logo-cdfp.png` y `portada-fondo.png` (descargables desde esta ayuda).
+La aplicación resuelve los recursos de la portada
+(`fpvirtual/logo-cdfp.png` y `fpvirtual/portada-fondo.png`) de forma
+automática, sin necesidad de subirlos con el `.md`.
 
 # Contenido de ejemplo
 

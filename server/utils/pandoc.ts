@@ -1,11 +1,20 @@
 import { execFile } from 'node:child_process'
+import { existsSync } from 'node:fs'
 import { readFile, writeFile } from 'node:fs/promises'
-import { basename } from 'node:path'
+import { basename, join, resolve as resolvePath } from 'node:path'
 import type { Workspace } from './workspace'
 
 const PANDOC_TIMEOUT_MS = 120_000
 
 const YAML_BLOCK_RE = /^---\r?\n[\s\S]*?\r?\n---\r?\n/
+
+// Plantilla corporativa FPVirtual (fork de Eisvogel) que se monta en el
+// contenedor efímero junto con el logo y el fondo de portada, para no
+// depender de que la imagen pandoc la incluya.
+function resolveThemeDir(): string | null {
+  const dir = resolvePath(process.cwd(), 'fpvirtual-theme')
+  return existsSync(join(dir, 'fpvirtual.latex')) ? dir : null
+}
 
 async function ensureDefaultMetadata(workspace: Workspace): Promise<void> {
   const content = await readFile(workspace.documentPath, 'utf8')
@@ -18,6 +27,7 @@ async function ensureDefaultMetadata(workspace: Workspace): Promise<void> {
     'lang: es',
     'mainfont: Carlito',
     'sansfont: Carlito',
+    'colorlinks: true',
     '---',
     ''
   ].join('\n')
@@ -31,11 +41,21 @@ export async function convertToPdf(workspace: Workspace): Promise<void> {
   const config = useRuntimeConfig()
   const image = config.pandocImage
   const inputName = basename(workspace.documentPath)
+  const themeDir = resolveThemeDir()
 
   const args = [
     'run', '--rm',
     '--network', 'none',
     '--mount', `type=bind,src=${workspace.dir},dst=/data`,
+    // La plantilla y los recursos corporativos se montan en /theme;
+    // TEXINPUTS permite que LaTeX resuelva fpvirtual/logo-cdfp.png y
+    // fpvirtual/portada-fondo.png desde ahí.
+    ...(themeDir
+      ? [
+          '--mount', `type=bind,src=${themeDir},dst=/theme`,
+          '--env', 'TEXINPUTS=/theme:'
+        ]
+      : []),
     ...(typeof process.getuid === 'function'
       ? ['--user', `${process.getuid()}:${process.getgid!()}`]
       : [])
@@ -46,7 +66,7 @@ export async function convertToPdf(workspace: Workspace): Promise<void> {
     `/data/${inputName}`,
     '-o', '/data/document.pdf',
     '--from', 'markdown',
-    '--template=eisvogel',
+    ...(themeDir ? ['--template=/theme/fpvirtual.latex'] : ['--template=eisvogel']),
     '--pdf-engine=xelatex',
     '--resource-path=/data',
     '--syntax-highlighting=default'

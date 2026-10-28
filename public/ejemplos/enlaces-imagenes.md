@@ -9,8 +9,8 @@ sansfont: Carlito
 keywords: [markdown, imágenes, fpvirtual]
 colorlinks: true
 titlepage: true
-titlepage-logo: "logo-cdfp.png"
-page-background: "portada-fondo.png"
+titlepage-logo: "fpvirtual/logo-cdfp.png"
+page-background: "fpvirtual/portada-fondo.png"
 page-background-opacity: "1"
 header-left: ""
 header-right: ""
@@ -49,6 +49,7 @@ Formatos admitidos: **PNG, JPG, GIF, WebP, SVG y BMP**.
 
 - Usa nombres de archivo sin espacios ni tildes (`captura-ejemplo.png` en
   lugar de `mi captura (1).png`).
-- Si el documento va a tener portada corporativa, sube también
-  `logo-cdfp.png` y `portada-fondo.png` (descargables desde la página de
-  ayuda) junto con el `.md`.
+- La aplicación incluye automáticamente los recursos corporativos
+  (`fpvirtual/logo-cdfp.png` y `fpvirtual/portada-fondo.png`), por lo que la
+  portada funciona sin subirlos; solo necesitas subir las imágenes propias
+  de tu documento.

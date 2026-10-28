@@ -8,8 +8,8 @@ mainfont: Carlito
 sansfont: Carlito
 colorlinks: true
 titlepage: true
-titlepage-logo: "logo-cdfp.png"
-page-background: "portada-fondo.png"
+titlepage-logo: "fpvirtual/logo-cdfp.png"
+page-background: "fpvirtual/portada-fondo.png"
 page-background-opacity: "1"
 header-left: ""
 header-right: ""

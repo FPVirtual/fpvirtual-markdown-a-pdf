@@ -16,6 +16,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY --from=build /app/.output /app/.output
+COPY --from=build /app/fpvirtual-theme /app/fpvirtual-theme
 
 EXPOSE 3000
 

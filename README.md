@@ -32,14 +32,24 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
   ```bash
   docker run --rm --network none \
     --mount type=bind,src=<workspace>,dst=/data \
+    --mount type=bind,src=<fpvirtual-theme>,dst=/theme \
+    --env TEXINPUTS=/theme: \
     $PANDOC_IMAGE /data/<documento>.md -o /data/document.pdf \
-    --from markdown --template=eisvogel --pdf-engine=xelatex \
-    --resource-path=/data --syntax-highlighting=idiomatic
+    --from markdown --template=/theme/fpvirtual.latex --pdf-engine=xelatex \
+    --resource-path=/data --syntax-highlighting=default
   ```
 
+  La plantilla corporativa FPVirtual (`fpvirtual-theme/`, fork de Eisvogel con
+  portada corporativa) se monta en `/theme` junto con el logo y el fondo de
+  portada; `TEXINPUTS` permite que LaTeX los resuelva sin subirlos con el
+  documento. Si el directorio no existe, se usa la plantilla `eisvogel` que
+  incluya la imagen.
 - Si el documento no trae bloque YAML de metadatos, se le antepone uno por
-  defecto (`title`, `lang: es`, `mainfont: Carlito`, `sansfont: Carlito`).
+  defecto (`title`, `lang: es`, `mainfont: Carlito`, `sansfont: Carlito`,
+  `colorlinks: true`).
 - `GET /api/download/<jobId>`: sirve el PDF y limpia el directorio temporal.
+- Los PDF de ejemplo de la página de ayuda (`public/ejemplos/`) se regeneran
+  con `scripts/generar-ejemplos.sh`.
 
 ## Variables de entorno
 
@@ -57,9 +67,13 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
   `WORKSPACE_DIR`), porque el `docker run -v` se resuelve en el host. Funciona
   en Linux con Docker local; con Docker Desktop o un daemon remoto habría que
   revisar la estrategia de rutas.
-- La imagen debe exponer pandoc como entrypoint con trabajo en `/data` e
-  incluir la plantilla con nombre `eisvogel` y las fuentes Carlito, tal como
-  documenta el README de `fpvirtual-pandoc-theme`.
+- La imagen debe exponer pandoc como entrypoint con trabajo en `/data` y las
+  fuentes Carlito. Lo recomendado es la imagen del proyecto
+  [`fpvirtual-pandoc-theme`](https://github.com/FPVirtual/fpvirtual-pandoc-theme)
+  (`docker build -t fpvirtualaragon/pandoc:latest .`), que además incluye la
+  plantilla `fpvirtual` y los recursos corporativos para uso standalone; la
+  app, en cualquier caso, monta su propia copia de la plantilla desde
+  `fpvirtual-theme/`.
 
 ## Desarrollo local sin Docker
 
