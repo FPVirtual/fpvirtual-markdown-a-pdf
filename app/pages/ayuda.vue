@@ -127,10 +127,30 @@
       </CardContent>
     </Card>
 
-    <!-- Índice -->
+    <!-- Cajas de contenido -->
     <Card :id="sections[4].id" class="scroll-mt-6">
       <CardHeader>
         <CardTitle>{{ sections[4].title }}</CardTitle>
+        <CardDescription>
+          Cajas destacadas de nota, aviso e importante.
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="flex flex-col gap-4">
+        <p class="text-sm leading-relaxed">
+          Rodea el contenido con un div de tres dos puntos y la aplicación lo
+          convierte en una caja destacada. Funciona sin configuración
+          adicional y admite formato <em>Markdown</em> interno (listas,
+          <strong>negritas</strong>, código…).
+        </p>
+        <CodeBlock :code="cajas" />
+        <ResultPreview file="cajas" />
+      </CardContent>
+    </Card>
+
+    <!-- Índice -->
+    <Card :id="sections[5].id" class="scroll-mt-6">
+      <CardHeader>
+        <CardTitle>{{ sections[5].title }}</CardTitle>
         <CardDescription>
           Tabla de contenidos generada automáticamente desde los encabezados.
         </CardDescription>
@@ -152,9 +172,9 @@
     </Card>
 
     <!-- Cabecera y portada -->
-    <Card :id="sections[5].id" class="scroll-mt-6">
+    <Card :id="sections[6].id" class="scroll-mt-6">
       <CardHeader>
-        <CardTitle>{{ sections[5].title }}</CardTitle>
+        <CardTitle>{{ sections[6].title }}</CardTitle>
         <CardDescription>
           Metadatos YAML para la portada con la plantilla Eisvogel.
         </CardDescription>
@@ -217,6 +237,7 @@ const sections = [
   { id: 'sintaxis-basica', title: 'Sintaxis básica' },
   { id: 'enlaces-imagenes', title: 'Enlaces e imágenes' },
   { id: 'notas-al-pie', title: 'Notas al pie' },
+  { id: 'cajas', title: 'Cajas de contenido' },
   { id: 'indice', title: 'Índice de contenidos' },
   { id: 'portada', title: 'Cabecera y portada' }
 ]
@@ -268,6 +289,23 @@ const notasAlPie = `La plantilla Eisvogel genera los PDF con pandoc.[^pandoc]
 
 [^pandoc]: Pandoc es un conversor universal
     de documentos: <https://pandoc.org>.`
+
+const cajas = `::: nota
+Información complementaria que ayuda a
+entender el contenido principal.
+:::
+
+::: aviso
+Algo que conviene tener en cuenta antes
+de continuar. Admite *Markdown* interno:
+
+- Listas
+- **Negritas**, \`código\`…
+:::
+
+::: importante
+Advertencia grave o acción irreversible.
+:::`
 
 const indiceYaml = `---
 title: "Título del documento"

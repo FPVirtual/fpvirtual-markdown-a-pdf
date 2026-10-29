@@ -36,7 +36,10 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
     --env TEXINPUTS=/theme: \
     $PANDOC_IMAGE /data/<documento>.md -o /data/document.pdf \
     --from markdown --template=/theme/fpvirtual.latex --pdf-engine=xelatex \
-    --resource-path=/data --syntax-highlighting=default
+    --resource-path=/data --syntax-highlighting=default \
+    --filter pandoc-latex-environment \
+    --metadata-file=/theme/content-boxes.yaml \
+    -H /theme/content-boxes.tex
   ```
 
   La plantilla corporativa FPVirtual (`fpvirtual-theme/`, fork de Eisvogel con
@@ -50,6 +53,32 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
 - `GET /api/download/<jobId>`: sirve el PDF y limpia el directorio temporal.
 - Los PDF de ejemplo de la página de ayuda (`public/ejemplos/`) se regeneran
   con `scripts/generar-ejemplos.sh`.
+
+## Cajas de contenido
+
+La conversión incluye el filtro `pandoc-latex-environment` y define las
+cajas corporativas `nota`, `aviso` e `importante` (tcolorbox, en
+`fpvirtual-theme/content-boxes.tex`), por lo que puedes destacar contenido
+sin configurar nada en tu documento:
+
+````markdown
+::: nota
+Información complementaria. Admite *Markdown* interno.
+:::
+
+::: aviso
+Algo que conviene tener en cuenta antes de continuar.
+:::
+
+::: importante
+Advertencia grave o acción irreversible.
+:::
+````
+
+Si generas el PDF fuera de la aplicación, necesitas el filtro y el mapeo
+clase → entorno (ver `fpvirtual-theme/content-boxes.yaml`), como en el
+ejemplo del proyecto
+[fpvirtual-pandoc-theme](https://github.com/FPVirtual/fpvirtual-pandoc-theme).
 
 ## Variables de entorno
 
@@ -70,8 +99,9 @@ rutas relativas, p. ej. `![captura](imagen.png)`) y pulsa **Generar PDF**.
   `WORKSPACE_DIR` y `THEME_DIR`), porque el `docker run -v` se resuelve en el
   host. Funciona en Linux con Docker local; con Docker Desktop o un daemon
   remoto habría que revisar la estrategia de rutas.
-- La imagen debe exponer pandoc como entrypoint con trabajo en `/data` y las
-  fuentes Carlito. Lo recomendado es la imagen del proyecto
+- La imagen debe exponer pandoc como entrypoint con trabajo en `/data`, las
+  fuentes Carlito y el filtro `pandoc-latex-environment` (para las cajas de
+  contenido). Lo recomendado es la imagen del proyecto
   [`fpvirtual-pandoc-theme`](https://github.com/FPVirtual/fpvirtual-pandoc-theme)
   (`docker build -t fpvirtual-pandoc:latest .`), que además incluye la
   plantilla `fpvirtual` y los recursos corporativos para uso standalone; la
